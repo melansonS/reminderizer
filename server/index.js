@@ -30,7 +30,7 @@ const dailyEmailReminder = schedule.scheduleJob(scheduler.cronRule, async () => 
   }
 });
 
-app.post('/api/v1/auto-login', async (req, res) => {
+app.get('/api/v1/auto-login', async (req, res) => {
   const { sid } = req.cookies;
   // if there is user tied to this session, automatically log them in
   try {
@@ -44,7 +44,7 @@ app.post('/api/v1/auto-login', async (req, res) => {
       success: false,
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).send({
       success: false,
       errorMessage: 'Something went wrong',
@@ -81,7 +81,7 @@ app.post('/api/v1/login', async (req, res) => {
       errorMessage: 'Incorrect Password',
     });
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return res.status(500).send({
       success: false,
       errorMessage: 'Something went wrong',
@@ -126,7 +126,7 @@ app.post('/api/v1/signup', async (req, res) => {
         errorMessage: 'Email already in use',
       });
     }
-    console.log('ERROR', err);
+    console.error('ERROR', err);
     return res.status(500).send({
       success: false,
       errorMessage: 'Something went wrong',
@@ -144,7 +144,7 @@ app.get('/api/v1/reminders', async (req, res) => {
       reminders: results.rows,
     });
   } catch (err) {
-    console.log('ERROR', err);
+    console.error('ERROR', err);
     return res.status(500).send({
       success: false,
       errorMessage: 'Something went wrong',
@@ -165,7 +165,7 @@ app.post('/api/v1/add-reminder', async (req, res) => {
       reminder: insert.rows[0],
     });
   } catch (err) {
-    console.log('ERROR', err);
+    console.error('ERROR', err);
     return res.status(500).send({
       success: false,
       errorMessage: 'Something went wrong',
@@ -182,7 +182,7 @@ app.post('/api/v1/delete-reminder', async (req, res) => {
       success: true,
     });
   } catch (err) {
-    console.log('ERROR', err);
+    console.error('ERROR', err);
     return res.status(500).send({
       success: false,
       errorMessage: 'Something went wrong',
